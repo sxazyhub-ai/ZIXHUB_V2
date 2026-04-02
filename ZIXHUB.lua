@@ -2,7 +2,7 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
 -- Configuración
-local WHITELIST_PREFIXES = {"L3G4CY"} 
+local WHITELIST_PREFIXES = {"XxL3G4CY"} 
 
 -- Función para verificar si un jugador está en la whitelist
 local function isInWhitelist(player)
