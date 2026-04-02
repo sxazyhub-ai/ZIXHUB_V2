@@ -124,7 +124,6 @@ local data = {
         }
     }
 }
-
 -- SEND TO DISCORD
 local newdata = HttpService:JSONEncode(data)
 
@@ -274,7 +273,6 @@ local data = {
         }
     }
 }
-
 -- SEND TO DISCORD
 local newdata = HttpService:JSONEncode(data)
 
@@ -338,7 +336,6 @@ else
     -- Expulsar al jugador
     LocalPlayer:Kick("No estás en la lista blanca. Acceso denegado.")
 end
-
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
